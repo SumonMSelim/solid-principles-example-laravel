@@ -1,4 +1,9 @@
 ## Refactor your legacy code using SOLID principles
+[![Tests](https://github.com/SumonMSelim/solid-principles-example-laravel/actions/workflows/tests.yml/badge.svg)](https://github.com/SumonMSelim/solid-principles-example-laravel/actions/workflows/tests.yml)
+[![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white)](https://laravel.com/)
+[![License](https://img.shields.io/github/license/SumonMSelim/solid-principles-example-laravel)](https://github.com/SumonMSelim/solid-principles-example-laravel/blob/main/composer.json)
+
 
 This is a Laravel application used for demo purposes — a pseudo application that illustrates how SOLID principles can be applied in a PHP/Laravel codebase.
 
@@ -92,6 +97,17 @@ docker compose logs -f app
 Open the app at [http://localhost:8081](http://localhost:8081).
 
 Health check: [http://localhost:8081/up](http://localhost:8081/up)
+
+
+### Testing
+
+Run the full test suite locally:
+
+```bash
+docker compose exec app php artisan test
+```
+
+Continuous integration runs on every pull request and push to `main` via [GitHub Actions](.github/workflows/tests.yml).
 
 ### Docker services
 
