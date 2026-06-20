@@ -9,25 +9,24 @@ use Illuminate\Http\Request;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
+    public function __construct(
+        private readonly User $user,
+    ) {}
 
-    public function create(Request $request)
+    public function create(Request $request): User
     {
-        $user = new User();
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
-
-        return $user;
+        return User::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ]);
     }
 
     public function getUsersFromYesterday()
     {
-        return $this->user->where('created_at', '>=', Carbon::yesterday())->get();
+        return $this->user->newQuery()
+            ->where('created_at', '>=', Carbon::yesterday())
+            ->get();
     }
 }

@@ -2,26 +2,24 @@
 
 namespace App\Providers;
 
+use App\Contracts\PaymentGatewayResolverInterface;
+use App\Contracts\PaymentStatusResolverInterface;
+use App\Contracts\UserRepositoryInterface;
+use App\Repository\UserRepository;
+use App\Services\PaymentGatewayResolver;
+use App\Services\PaymentStatusResolver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(PaymentGatewayResolverInterface::class, PaymentGatewayResolver::class);
+        $this->app->bind(PaymentStatusResolverInterface::class, PaymentStatusResolver::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         //
     }

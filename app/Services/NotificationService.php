@@ -6,9 +6,8 @@ use App\Contracts\NotifiableInterface;
 
 class NotificationService
 {
-    public function send(NotifiableInterface $subscriber)
+    public function send(NotifiableInterface $subscriber): void
     {
-        //notification logic goes here
         $subscriber->getNotifyEmail();
     }
 }

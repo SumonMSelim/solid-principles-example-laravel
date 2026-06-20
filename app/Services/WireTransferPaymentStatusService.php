@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
-class WireTransferPaymentStatusService
+use App\Contracts\PaymentStatusInterface;
+
+class WireTransferPaymentStatusService implements PaymentStatusInterface
 {
-    public function getStatus()
+    public function getStatus(): string
     {
         return 'SUCCESS';
     }

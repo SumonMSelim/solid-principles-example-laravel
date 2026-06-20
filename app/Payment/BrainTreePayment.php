@@ -6,9 +6,8 @@ use App\Contracts\PayableInterface;
 
 class BrainTreePayment implements PayableInterface
 {
-    public function pay()
+    public function pay(): array
     {
-        // logic goes here
-        return 'OK';
+        return ['status' => 'OK', 'gateway' => 'BrainTree'];
     }
 }

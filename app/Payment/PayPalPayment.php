@@ -2,11 +2,12 @@
 
 namespace App\Payment;
 
-class PayPalPayment
+use App\Contracts\PayableInterface;
+
+class PayPalPayment implements PayableInterface
 {
-    public function pay()
+    public function pay(): array
     {
-        // logic goes here
-        return 'OK';
+        return ['status' => 'OK', 'gateway' => 'PayPal'];
     }
 }

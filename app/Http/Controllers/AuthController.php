@@ -2,30 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\PaymentStatusResolverInterface;
 use App\Http\Requests\CreateUserRequest;
-use App\Models\User;
-use App\Repository\UserRepository;
+use App\Contracts\UserRepositoryInterface;
+use App\Services\PaymentOrchestrator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class AuthController extends Controller
 {
-    /**
-     * @param  CreateUserRequest  $request
-     * @param  UserRepository  $userRepository
-     * @return RedirectResponse
-     */
-    public function register(CreateUserRequest $request, UserRepository $userRepository)
+    public function register(CreateUserRequest $request, UserRepositoryInterface $userRepository): RedirectResponse
     {
         try {
-            // Persist user to database
-            $user = $userRepository->create($request);
+            $userRepository->create($request);
 
             notify_success('Account registered');
-            return redirect()->route('login');
-        } catch (Exception $e) {
+
+            return redirect('/');
+        } catch (Throwable $e) {
             notify_error($e->getMessage());
+
             return redirect()->back();
         }
     }
