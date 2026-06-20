@@ -7,18 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subscriber extends Model implements NotifiableInterface
 {
-    public function  subscribe()
+    protected $fillable = [
+        'email',
+    ];
+
+    public function subscribe(): void
     {
-        // logic goes here
+        // subscription logic goes here
     }
 
-    public function unsubscribe()
+    public function unsubscribe(): void
     {
-        // logic goes here
+        // unsubscription logic goes here
     }
 
-    public function getNotifyEmail()
+    public function getNotifyEmail(): string
     {
-        // gets email address for sending notification
+        return $this->email;
     }
 }

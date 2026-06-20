@@ -1,12 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Register an user
-Route::post('/register', 'AuthController@register');
-
-// Admin Panel
-Route::group(['middleware' => 'admin'], function () {
-    // Create an user
-    Route::post('/users/create', 'UserController@create');
-});
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/users/create', [UserController::class, 'store']);

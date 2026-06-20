@@ -1,24 +1,24 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController as ApiAuthController;
+use App\Http\Controllers\Api\UserController as ApiUserController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Register an user
-Route::post('/register', 'AuthController@register');
-
-// Admin
-Route::group(['middleware' => 'admin'], function () {
-    // Users list
-    Route::get('/users/index', 'UserController@index');
-
-    // Create an user
-    Route::post('/users/create', 'UserController@store');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-// User
-Route::group(['middleware' => 'user'], function () {
-    // Make a payment
-    Route::post('/pay', 'PaymentController@pay');
+Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-    // Payment Status
-    Route::get('/status', 'PaymentController@status');
+Route::middleware('admin')->group(function () {
+    Route::get('/users/index', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users/create', [UserController::class, 'store'])->name('users.create');
+});
+
+Route::middleware('user')->group(function () {
+    Route::post('/pay', [PaymentController::class, 'pay'])->name('pay');
+    Route::get('/status', [PaymentController::class, 'status'])->name('status');
 });

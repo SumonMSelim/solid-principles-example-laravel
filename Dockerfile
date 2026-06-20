@@ -1,6 +1,5 @@
-FROM php:7.4-fpm
+FROM php:8.4-fpm
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -8,32 +7,23 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    libzip-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install Composer
-COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
-
-# Set working directory
 WORKDIR /var/www
 
-# Copy existing application directory contents
-COPY . /var/www
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Copy existing application directory permissions
 RUN chown -R www-data:www-data /var/www
 
-# Expose port 9000 and start php-fpm server
 EXPOSE 9000
+
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["php-fpm"]
-
-# Install Laravel dependencies
-RUN composer install --optimize-autoloader --no-dev
-
-# Ensure storage and cache directories are writable
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache

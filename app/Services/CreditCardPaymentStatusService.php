@@ -3,16 +3,16 @@
 namespace App\Services;
 
 use App\Contracts\AuthorizeableInterface;
+use App\Contracts\PaymentStatusInterface;
 
-class CreditCardPaymentStatusService implements AuthorizeableInterface
+class CreditCardPaymentStatusService implements AuthorizeableInterface, PaymentStatusInterface
 {
-
-    public function authorize()
+    public function authorize(): void
     {
-        // authorize with Credit Card Payment gateway provider
+        // authorize with credit card provider
     }
 
-    public function getStatus()
+    public function getStatus(): string
     {
         $this->authorize();
 

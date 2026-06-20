@@ -2,11 +2,12 @@
 
 namespace App\Payment;
 
-class WireTransferPayment
+use App\Contracts\PayableInterface;
+
+class WireTransferPayment implements PayableInterface
 {
-    public function pay()
+    public function pay(): array
     {
-        // logic goes here
-        return 'OK';
+        return ['status' => 'OK', 'gateway' => 'Wire Transfer'];
     }
 }
