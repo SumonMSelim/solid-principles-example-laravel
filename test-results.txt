@@ -1,0 +1,85 @@
+================================================================================
+DEPENDENCY SECURITY UPGRADE — FULL TEST SUITE RESULTS
+================================================================================
+Project : sumonmselim/solid-principles-example-laravel
+Command : php artisan test   (Laravel test runner)
+PHP     : 8.4.24
+Database: sqlite (:memory:)  — per phpunit.xml (DB_CONNECTION=sqlite, DB_DATABASE=:memory:)
+APP_KEY : set (base64:, 32-byte cipher key)
+
+Context : Test suite executed AFTER upgrading three vulnerable transitive
+          dependencies to secure, Laravel-compatible versions:
+            guzzlehttp/guzzle   7.12.1 -> 7.15.3
+            guzzlehttp/psr7     2.12.1 -> 2.13.0
+            league/commonmark   2.8.2  -> 2.9.2
+          `composer audit` reports 0 advisories after the upgrade (see SECURITY_REPORT.md).
+
+Result  : ALL TESTS PASSED — no regressions introduced by the dependency upgrade.
+================================================================================
+
+   PASS  Tests\Unit\NotifiableModelTest
+  ✓ user returns notify email                                            0.10s
+  ✓ subscriber returns notify email                                      0.01s
+
+   PASS  Tests\Unit\NotificationServiceTest
+  ✓ send accepts notifiable implementation                               0.01s
+
+   PASS  Tests\Unit\PaymentGatewayTest
+  ✓ gateway returns expected response with data set " pay pal"           0.01s
+  ✓ gateway returns expected response with data set " credit card"       0.01s
+  ✓ gateway returns expected response with data set " brain tree"        0.01s
+  ✓ gateway returns expected response with data set " wire transfer"     0.01s
+
+   PASS  Tests\Unit\PaymentOrchestratorTest
+  ✓ process resolves payment and creates subscriber                      0.08s
+  ✓ process uses default gateway and email when not provided             0.01s
+
+   PASS  Tests\Unit\PaymentResolverTest
+  ✓ payment gateway resolver returns expected gateway with data set " p… 0.01s
+  ✓ payment gateway resolver returns expected gateway with data set " c… 0.01s
+  ✓ payment gateway resolver returns expected gateway with data set " b… 0.01s
+  ✓ payment gateway resolver returns expected gateway with data set " w… 0.01s
+  ✓ unknown gateway falls back to default                                0.01s
+  ✓ payment status resolver returns expected service with data set " pa… 0.01s
+  ✓ payment status resolver returns expected service with data set " cr… 0.01s
+  ✓ payment status resolver returns expected service with data set " br… 0.01s
+  ✓ payment status resolver returns expected service with data set " wi… 0.01s
+  ✓ new gateway can be registered without changing resolver              0.01s
+  ✓ resolver throws when no gateway is configured                        0.01s
+
+   PASS  Tests\Unit\PaymentStatusServiceTest
+  ✓ status service returns success with data set " pay pal"              0.01s
+  ✓ status service returns success with data set " credit card"          0.01s
+  ✓ status service returns success with data set " wire transfer"        0.01s
+
+   PASS  Tests\Unit\ServiceProviderBindingTest
+  ✓ container resolves interface bindings                                0.01s
+
+   PASS  Tests\Unit\UserRepositoryTest
+  ✓ create persists user from request                                    0.01s
+  ✓ get users from yesterday returns recent users only                   0.02s
+
+   PASS  Tests\Feature\ApiRegistrationTest
+  ✓ api register creates user                                            0.03s
+  ✓ api users create creates user                                        0.01s
+  ✓ api registration requires valid payload                              0.01s
+
+   PASS  Tests\Feature\HealthCheckTest
+  ✓ home page is accessible                                              0.02s
+  ✓ health endpoint is accessible                                        0.01s
+
+   PASS  Tests\Feature\PaymentFlowTest
+  ✓ payment status endpoint returns success                              0.01s
+  ✓ pay processes payment and creates subscriber                         0.01s
+
+   PASS  Tests\Feature\UserManagementTest
+  ✓ users index returns users from yesterday                             0.02s
+  ✓ users create persists user                                           0.01s
+
+   PASS  Tests\Feature\WebRegistrationTest
+  ✓ web register creates user and redirects                              0.01s
+
+  Tests:    36 passed (79 assertions)
+  Duration: 0.64s
+
+[COMMAND_EXIT_CODE="0"]
