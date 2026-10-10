@@ -2,6 +2,7 @@
 
 **Project:** [`sumonmselim/solid-principles-example-laravel`](https://github.com/SumonMSelim/solid-principles-example-laravel/)
 **Date:** 2026-08-11
+**Update:** Section 6 records the re-audit on 2026-10-10.
 **Scope:** Full dependency security audit of the Composer dependency graph, with remediation of all identified vulnerabilities.
 **Tooling:** `composer audit` (Composer 2.8.8) against the GitHub Advisory Database / packagist advisories.
 
@@ -149,7 +150,7 @@ Duration: 0.64s
 [COMMAND_EXIT_CODE="0"]
 ```
 
-**Result: 36/36 tests pass, 0 failures, 0 errors.** The dependency upgrade introduces no behavioral regressions. Full per-test output is captured in [`test-results.txt`](./test-results.txt).
+**Result: 36/36 tests pass, 0 failures, 0 errors.** The dependency upgrade introduces no behavioral regressions. The 11 August 2026 summary is quoted above. The current run is in [`test-results.txt`](./test-results.txt).
 
 ---
 
@@ -159,3 +160,42 @@ Duration: 0.64s
 2. **Run `composer audit` in CI.** Add it as a step in the GitHub Actions workflow (`.github/workflows/*.yml`) so advisories are caught before merge — currently CI only runs `php artisan test`.
 3. **Keep dependencies current.** Periodically run `composer update` (or enable Dependabot/Renovate) to pick up patch-level security fixes promptly.
 4. **No application-code changes were required.** Guzzle and CommonMark are used only internally by the framework; the SOLID-principle demo code is unaffected.
+
+---
+
+## 6. Re-audit on 10 October 2026
+
+**Date:** 2026-10-10
+
+We ran the dependency audit again on 10 October 2026.
+
+PR #22 remediated the advisories found before this date. Those fixes remain in the lockfile.
+
+The scan covers both lockfiles. `osv-scanner` reports 0 known advisories for Composer and 0 known advisories for npm.
+
+Current secure versions:
+
+| Package | Locked version |
+|---|---|
+| `laravel/framework` | 13.35.0 |
+| `league/commonmark` | 2.10.3 |
+| `league/flysystem` | 3.36.0 |
+
+This change also updates three dev packages. Each new version sits inside the caret range already set in `composer.json`. `composer.json` is unchanged.
+
+| Package | Before | After |
+|---|---|---|
+| `laravel/pint` | v1.29.3 | v1.32.1 |
+| `mockery/mockery` | 1.6.12 | 1.6.15 |
+| `nunomaduro/collision` | v8.9.4 | v8.9.5 |
+
+Composer moved two libraries that those packages depend on:
+
+| Package | Before | After |
+|---|---|---|
+| `filp/whoops` | 2.18.4 | 2.18.6 |
+| `hamcrest/hamcrest-php` | v2.1.1 | v3.0.0 |
+
+`mockery/mockery` 1.6.15 allows `hamcrest/hamcrest-php` `^2.0` or `^3.0`. Composer selected v3.0.0.
+
+The suite result is 36 tests, 79 assertions, 0 failures, and 0 warnings. The log is in [`test-results.txt`](./test-results.txt).

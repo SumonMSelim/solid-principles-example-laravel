@@ -1,20 +1,27 @@
 ================================================================================
-DEPENDENCY SECURITY UPGRADE — FULL TEST SUITE RESULTS
+DEV DEPENDENCY PATCH: TEST SUITE RESULTS
 ================================================================================
 Project : sumonmselim/solid-principles-example-laravel
-Command : php artisan test   (Laravel test runner)
-PHP     : 8.4.24
-Database: sqlite (:memory:)  — per phpunit.xml (DB_CONNECTION=sqlite, DB_DATABASE=:memory:)
+Command : php artisan test   (Laravel test runner, via mise run test)
+PHP     : 8.4.26
+Database: sqlite (:memory:), per phpunit.xml (DB_CONNECTION=sqlite, DB_DATABASE=:memory:)
 APP_KEY : set (base64:, 32-byte cipher key)
+Date    : 10 October 2026 (2026-10-10, CEST)
 
-Context : Test suite executed AFTER upgrading three vulnerable transitive
-          dependencies to secure, Laravel-compatible versions:
-            guzzlehttp/guzzle   7.12.1 -> 7.15.3
-            guzzlehttp/psr7     2.12.1 -> 2.13.0
-            league/commonmark   2.8.2  -> 2.9.2
-          `composer audit` reports 0 advisories after the upgrade (see SECURITY_REPORT.md).
+Context : Test suite executed after a patch bump of three dev dependencies,
+          inside the existing caret ranges in composer.json:
+            laravel/pint            v1.29.3 -> v1.32.1
+            mockery/mockery         1.6.12  -> 1.6.15
+            nunomaduro/collision    v8.9.4  -> v8.9.5
+          Transitive updates from that bump:
+            filp/whoops             2.18.4  -> 2.18.6
+            hamcrest/hamcrest-php   v2.1.1  -> v3.0.0
+          Re-audit on 2026-10-10: 0 Composer advisories and 0 npm advisories.
+          Prior advisories were remediated by PR #22.
+          Current secure versions: laravel/framework 13.35.0,
+          league/commonmark 2.10.3, league/flysystem 3.36.0.
 
-Result  : ALL TESTS PASSED — no regressions introduced by the dependency upgrade.
+Result  : ALL TESTS PASSED. 36 tests, 79 assertions, 0 failures, 0 warnings.
 ================================================================================
 
    PASS  Tests\Unit\NotifiableModelTest
